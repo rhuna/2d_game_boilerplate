@@ -95,13 +95,15 @@
     <None Include="sfml-window-d-3.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="player.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\player.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="player.h" />
+    <ClInclude Include="headers\Engine.h" />
+    <ClInclude Include="headers\Entity.h" />
+    <ClInclude Include="headers\player.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="graphics\background.png" />
