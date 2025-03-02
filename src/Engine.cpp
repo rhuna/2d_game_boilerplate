@@ -9,7 +9,7 @@ Engine::Engine(sf::VideoMode vm1, sf::Texture bgTexture, sf::Vector2f resolution
 	m_vm({1250,780}, 32),
 	m_window(vm1, "boilerplate"),
 	m_texture(bgTexture),
-	m_background(bgTexture),
+	m_background(m_texture),
 	m_sound(m_sound),
 	m_dt(),
 	m_isRunning(true),
@@ -43,6 +43,12 @@ void Engine::update() {
 
 
 void Engine::draw() {
+
+	sf::Sprite background(m_texture);
+	m_background = background;
+	sf::CircleShape circle(100);
+	circle.setFillColor(sf::Color::Green);
+	m_circle = circle;
 	m_window.clear();
 	m_window.draw(m_background);
 	m_window.draw(m_circle);
@@ -55,11 +61,7 @@ void Engine::run() {
 	init();
 	load();
 	while (m_window.isOpen()) {
-		sf::Sprite background(m_texture);
-		m_background = background;
-		sf::CircleShape circle(100);
-
-		circle.setFillColor(sf::Color::Green);
+		
 
 		draw();
 		update();
