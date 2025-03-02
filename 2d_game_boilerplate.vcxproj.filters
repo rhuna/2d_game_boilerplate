@@ -15,11 +15,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
+    <None Include="README.md" />
     <None Include="sfml-audio-3.dll" />
     <None Include="sfml-audio-d-3.dll" />
     <None Include="sfml-graphics-3.dll" />
@@ -32,7 +30,29 @@
     <None Include="sfml-window-d-3.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <Image Include="graphics\background.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="graphics\background_sheet.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

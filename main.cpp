@@ -8,7 +8,7 @@
 
 int main() {
 
-	sf::Vector2f resolution(800, 600);
+	//sf::Vector2f resolution(800, 600);
 
 	sf::VideoMode vm({800,600}, 32);
 	vm.bitsPerPixel = 32;
