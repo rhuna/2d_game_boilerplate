@@ -6,38 +6,40 @@
 
 #include <iostream>
 #include "SFML/Graphics.hpp"
-
 #include "Entity.h"
+#include "Engine.h"
 
 
-class Player : Entity {
+
+class Player : public Entity {
 private:
 
-	float speed;
-	float maxSpeed;
-	float acceleration;
-	float deceleration;
-	sf::Angle angle;
-	sf::Angle maxRotation;
-	float rotationSpeed;
-	sf::Angle rotation;
-	float radius;
-	float mass;
-	float health;
-	float maxHealth;
-	float damage;
-	float maxDamage;
-	float fireRate;
-	float maxFireRate;
-	float fireRange;
-	float maxFireRange;
-	float fireSpeed;
-	float maxFireSpeed;
+	sf::Texture m_texture;
+	float m_speed;
+	float m_maxSpeed;
+	float m_acceleration;
+	float m_deceleration;
+	sf::Angle m_angle;
+	sf::Angle m_maxRotation;
+	float m_rotationSpeed;
+	sf::Angle m_rotation;
+	float m_radius;
+	float m_mass;
+	float m_health;
+	float m_maxHealth;
+	float m_damage;
+	float m_maxDamage;
+	float m_fireRate;
+	float m_maxFireRate;
+	float m_fireRange;
+	float m_maxFireRange;
+	float m_fireSpeed;
+	float m_maxFireSpeed;
 
 
 	
 	void fire();
-	void takeDamage();
+	void takeDamage(float damageAmount);
 	void die();
 	void respawn();
 	void upgrade();
@@ -55,11 +57,12 @@ private:
 
 
 public:
+	sf::Sprite m_sprite;
 
 	Player();
 	~Player();
 	void update();
-	void draw();
+	sf::Sprite draw();
 	void move();
 	void rotate();
 	void checkBounds();

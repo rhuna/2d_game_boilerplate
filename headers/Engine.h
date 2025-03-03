@@ -8,18 +8,23 @@
 #include <SFML/Network.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include "player.h"
+
 
 
 class Engine {
 public:
-	Engine(sf::VideoMode vm1, sf::Texture bgTexture, sf::Vector2f resolution);
+
+	enum class State {
+		PAUSED, LEVELING_UP, GAMEOVER, PLAYING
+	};
+	State state = State::GAMEOVER;
+
+
+
+	Engine(sf::VideoMode vm1);
 	~Engine();
-	void update();
-	void draw();
 	void run();
-	void init();
-	void load();
-	void unload();
 	void close();
 	void pause();
 	void resume();
@@ -34,6 +39,12 @@ public:
 
 
 private:
+
+	void init();
+	void load();
+	void unload();
+	void update();
+	void draw();
 
 	sf::RenderWindow m_window;
 	sf::Texture m_texture;

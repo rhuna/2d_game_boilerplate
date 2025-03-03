@@ -42,6 +42,9 @@
     <ClCompile Include="src\Engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\Entity.h">
@@ -53,12 +56,18 @@
     <ClInclude Include="headers\Engine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headers\enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="graphics\background.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="graphics\background_sheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="graphics\player.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

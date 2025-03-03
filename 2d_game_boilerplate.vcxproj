@@ -95,12 +95,14 @@
     <None Include="sfml-window-d-3.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\enemy.h" />
     <ClInclude Include="headers\Engine.h" />
     <ClInclude Include="headers\Entity.h" />
     <ClInclude Include="headers\player.h" />
@@ -108,6 +110,7 @@
   <ItemGroup>
     <Image Include="graphics\background.png" />
     <Image Include="graphics\background_sheet.png" />
+    <Image Include="graphics\player.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
