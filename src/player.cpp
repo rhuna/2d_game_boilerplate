@@ -3,9 +3,9 @@
 //public
 
 
-Player::Player() :
-	m_sprite(m_texture),
-	m_speed(0.0f), m_maxSpeed(0.0f), m_acceleration(0.0f),
+Player::Player(sf::Texture texture) :
+	m_sprite(texture), m_velocity(10.0f,10.0f),
+	m_speed(10.0f), m_maxSpeed(10.0f), m_acceleration(0.0f),
 	m_deceleration(0.0f), m_angle(sf::degrees(0)),
 	m_maxRotation(sf::degrees(0)), m_rotationSpeed(0),
 	m_rotation(sf::degrees(0)), m_radius(0.0f),
@@ -14,20 +14,20 @@ Player::Player() :
 	m_maxFireRate(0.0f), m_fireRange(0.0f), m_maxFireRange(0.0f),
 	m_fireSpeed(0.0f), m_maxFireSpeed(0.0f)
 {
-	
-	
-
 
 	
+	move();
 };
 Player::~Player() {
 	//delete player
 
 };
-void Player::update() {
+void Player::update(float deltaTime) {
 	//update position
 
-
+		//m_position. +=  m_speed * deltaTime; // Update position
+		//m_sprite.setPosition(m_position);
+		//
 
 
 	//update rotation
@@ -51,33 +51,78 @@ void Player::update() {
 
 
 };
-sf::Sprite Player::draw() {
-	//draw player
-	sf::Texture texture;
-	if (!texture.loadFromFile("C:/dev/2d_game_boilerplate/graphics/player.png")) { // Replace with your texture file
-		// Handle texture loading error
-		std::cout << "player texture not loaded\n";
-	}
-	m_texture = texture;
-	m_sprite.setTexture(m_texture);
-	m_sprite.setPosition({ 400.0f / 2, 300.0f / 2 });
-	m_sprite.setScale({ 1, 1 });
-	m_sprite.setOrigin({ 0, 0 });
-	m_sprite.setRotation(sf::degrees(0));
 
-	return m_sprite;
+
+sf::Vector2f Player::getCenter() {
+	return sf::Vector2f(0, 0);
+};
+void Player::moveLeft() {
+	m_position.x -= m_speed * m_velocity[0];
+	m_sprite.setPosition({ m_position.x,m_position.y });
+	std::cout << "[" << m_position.x << ", " << m_position.y << "]\n";
+
+};
+void Player::moveRight() {
+	m_position.x += m_speed * m_velocity[0];
+	m_sprite.setPosition({ m_position.x,m_position.y });
+	std::cout << "[" << m_position.x << ", " << m_position.y << "]\n";
+	
+
+};
+void Player::moveUp() {
+	m_position.x -= m_speed * m_velocity[1];
+	m_sprite.setPosition({ m_position.x,m_position.y });
+	std::cout << "[" << m_position.x << ", " << m_position.y << "]\n";
+};
+void Player::moveDown() {
+	m_position.y += m_speed * m_velocity[1];
+	m_sprite.setPosition({ m_position.x,m_position.y });
+	std::cout << "[" << m_position.x << ", " << m_position.y << "]\n";
+};
+void Player::rotateLeft() {
+	m_sprite.rotate(sf::degrees(-1));
+};
+void Player::rotateRight() {
+	m_sprite.rotate(sf::degrees(1));
+
 };
 
+void Player::draw(sf::RenderWindow& window) {
+	
+	window.draw(m_sprite);
 
-
+}
 
 void Player::move() {
-	//move player
-	//move player forward
-	//move player backward
-	//move player left
-	//move player right
-	//move player up
+
+	sf::Vector2f direction;
+	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+		direction.y = -1.0f;
+		this->moveUp();
+		//checkBounds();
+		//checkCollision();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+		direction.y = 1.0f;
+		this->moveDown();
+		//checkBounds();
+		//checkCollision();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+		direction.x = -1.0f;
+		this->moveLeft();
+		this->rotateLeft();
+		//checkBounds();
+		//checkCollision();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+		direction.x = 1.0f;
+		this->moveRight();
+		this->rotateRight();
+		//checkBounds();
+		//checkCollision();
+	}
 };
 void Player::rotate() {
 	//rotate player
@@ -88,22 +133,22 @@ void Player::rotate() {
 
 };
 void Player::checkBounds() {
-	sf::Vector2f position = this->getPosition();
-	sf::Vector2u windowSize = sf::Vector2u(1250, 780); // Assuming window size is known
-
-	if (position.x + m_sprite.getGlobalBounds().position.x / 2 >= windowSize.x) {
-		m_sprite.setPosition({ windowSize.x - m_sprite.getGlobalBounds().position.x / 2, position.y });
-	}
-	else if (position.x - m_sprite.getGlobalBounds().position.x / 2 <= 0) {
-		m_sprite.setPosition({ m_sprite.getGlobalBounds().position.x / 2, position.y });
-	}
-
-	if (position.y + m_sprite.getGlobalBounds().position.y / 2 >= windowSize.y) {
-		m_sprite.setPosition({ position.x, windowSize.y - m_sprite.getGlobalBounds().position.y / 2 });
-	}
-	else if (position.y - m_sprite.getGlobalBounds().position.y / 2 <= 0) {
-		m_sprite.setPosition({ position.x, m_sprite.getGlobalBounds().position.y / 2 });
-	}
+	//sf::Vector2f position = this->getPosition();
+	//sf::Vector2u windowSize = sf::Vector2u(1250, 780); // Assuming window size is known
+	//
+	//if (position.x + m_sprite.getGlobalBounds().position.x / 2 >= windowSize.x) {
+	//	m_sprite.setPosition({ windowSize.x - m_sprite.getGlobalBounds().position.x / 2, position.y });
+	//}
+	//else if (position.x - m_sprite.getGlobalBounds().position.x / 2 <= 0) {
+	//	m_sprite.setPosition({ m_sprite.getGlobalBounds().position.x / 2, position.y });
+	//}
+	//
+	//if (position.y + m_sprite.getGlobalBounds().position.y / 2 >= windowSize.y) {
+	//	m_sprite.setPosition({ position.x, windowSize.y - m_sprite.getGlobalBounds().position.y / 2 });
+	//}
+	//else if (position.y - m_sprite.getGlobalBounds().position.y / 2 <= 0) {
+	//	m_sprite.setPosition({ position.x, m_sprite.getGlobalBounds().position.y / 2 });
+	//}
 	
 };
 void Player::checkCollision() {
@@ -136,6 +181,9 @@ void Player::checkCollisionWithBullet() {
 	//else
 	//do nothing
 };
+
+
+
 
 
 

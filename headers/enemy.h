@@ -2,11 +2,11 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "Entity.h"
+
 #include "SFML/Graphics.hpp"
 
 
-class Enemy : public Entity {
+class Enemy {
 public:
 
 	Enemy();

@@ -28,6 +28,8 @@
     <None Include="sfml-system-d-3.dll" />
     <None Include="sfml-window-3.dll" />
     <None Include="sfml-window-d-3.dll" />
+    <None Include="Debug\2d_game_boilerplate.pdb" />
+    <None Include="Debug\2d_game_boilerplate.exe" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Entity.cpp">
@@ -45,6 +47,9 @@
     <ClCompile Include="src\enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\TextureHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\Entity.h">
@@ -57,6 +62,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\TextureHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

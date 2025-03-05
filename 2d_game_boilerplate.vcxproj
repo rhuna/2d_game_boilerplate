@@ -82,6 +82,8 @@
   <ItemGroup>
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
+    <None Include="Debug\2d_game_boilerplate.exe" />
+    <None Include="Debug\2d_game_boilerplate.pdb" />
     <None Include="README.md" />
     <None Include="sfml-audio-3.dll" />
     <None Include="sfml-audio-d-3.dll" />
@@ -100,12 +102,14 @@
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\TextureHolder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\enemy.h" />
     <ClInclude Include="headers\Engine.h" />
     <ClInclude Include="headers\Entity.h" />
     <ClInclude Include="headers\player.h" />
+    <ClInclude Include="headers\TextureHolder.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="graphics\background.png" />

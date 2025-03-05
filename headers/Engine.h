@@ -9,7 +9,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include "player.h"
-
+#include "TextureHolder.h"
 
 
 class Engine {
@@ -45,6 +45,8 @@ private:
 	void unload();
 	void update();
 	void draw();
+
+	TextureHolder th;
 
 	sf::RenderWindow m_window;
 	sf::Texture m_texture;
