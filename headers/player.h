@@ -38,8 +38,12 @@ private:
 	float m_fireSpeed;
 	float m_maxFireSpeed;
 
+	bool m_upPressed = false;
+	bool m_downPressed = false;
+	bool m_leftPressed = false;
+	bool m_rightPressed = false;
 
-
+	int m_tileSize=15;
 
 	void fire();
 	void takeDamage(float damageAmount);
@@ -57,13 +61,13 @@ private:
 	void resetAll();
 
 	
-
+	
 
 
 public:
 
 	//public members
-	sf::Vector2f m_position = { 10.0f,10.0f };
+	sf::Vector2f m_position = { 5.0f,5.0f };
 	std::vector<float> m_velocity = { 10.0f,10.0f };
 	std::vector<float> m_resolution = { 0,0 };
 	sf::Texture m_texture;
@@ -72,9 +76,9 @@ public:
 
 	Player(sf::Texture texture);
 	~Player();
-	void update(float deltaTime);
+	void update(float elapsedTime, sf::Vector2i mousePosition);
 	void draw(sf::RenderWindow& window);
-	void move();
+	void move(sf::RenderWindow& window);
 	void rotate();
 	void checkBounds();
 	void checkCollision();
@@ -90,7 +94,10 @@ public:
 	void moveDown();
 	void rotateLeft();
 	void rotateRight();
-
+	void stopRight();
+	void stopLeft();
+	void stopUp();
+	void stopDown();
 
 };
 

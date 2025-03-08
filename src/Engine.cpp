@@ -52,12 +52,12 @@ void Engine::update() {
 };
 
 
-void Engine::draw() {
-	sf::Clock clock;
-	sf::Time dt = clock.restart();
-	float time = 0.0f;
-	time += clock.getElapsedTime().asSeconds();
-
+void Engine::draw(sf::Clock dt) {
+	
+	sf::Time DT = dt.restart();
+	sf::Vector2f mouseWorldPosition;
+	sf::Vector2i mouseScreenPosition;
+	mouseScreenPosition = sf::Mouse::getPosition(m_window);
 	//draw background
 	sf::Sprite background(m_texture);
 	m_background = background;
@@ -74,13 +74,18 @@ void Engine::draw() {
 	}
 	Player player1(playertexture);
 	player1.m_sprite.setTexture(playertexture);
-	player1.update(time);
+	player1.update(DT.asSeconds(), mouseScreenPosition);
+	float seconds = DT.asSeconds();
+	std::cout << seconds << "\n";
+
+	player1.move(m_window);
+
 	
+	player1.update(seconds, mouseScreenPosition);
 	//draw and display defined window
 	m_window.clear();
 	m_window.draw(m_background);
 	player1.draw(m_window);
-	//m_window.draw(player1.m_sprite);
 	std::cout << "background texture good\n";
 	m_window.display();
 };
@@ -95,15 +100,17 @@ void Engine::draw() {
 
 void Engine::run() {
 	sf::Clock clock;
-	sf::Time dt = clock.restart();
-	float time = 0.0f;
-	time += clock.getElapsedTime().asSeconds();
+
 	while (m_window.isOpen()) {
+		while (const std::optional event = m_window.pollEvent()) {
+			draw(clock);
+			update();
+		}
+
+
+
 		
-
-		draw();
-		update();
-
+		
 		
 	}
 	unload();

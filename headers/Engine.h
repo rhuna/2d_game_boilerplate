@@ -44,10 +44,8 @@ private:
 	void load();
 	void unload();
 	void update();
-	void draw();
-
+	void draw(sf::Clock dt);
 	TextureHolder th;
-
 	sf::RenderWindow m_window;
 	sf::Texture m_texture;
 	sf::Sprite m_background;
@@ -82,3 +80,4 @@ private:
 
 #endif // !ENGINE_H
 
+void draw(sf::Clock dt, const std::optional<sf::Event> event);

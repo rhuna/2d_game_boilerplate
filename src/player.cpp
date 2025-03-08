@@ -4,51 +4,23 @@
 
 
 Player::Player(sf::Texture texture) :
-	m_sprite(texture), m_velocity(10.0f,10.0f),
-	m_speed(10.0f), m_maxSpeed(10.0f), m_acceleration(0.0f),
-	m_deceleration(0.0f), m_angle(sf::degrees(0)),
-	m_maxRotation(sf::degrees(0)), m_rotationSpeed(0),
-	m_rotation(sf::degrees(0)), m_radius(0.0f),
-	m_mass(0.0f), m_health(0.0f), m_maxHealth(0.0f),
-	m_damage(0.0f), m_maxDamage(0.0f), m_fireRate(0.0f),
-	m_maxFireRate(0.0f), m_fireRange(0.0f), m_maxFireRange(0.0f),
-	m_fireSpeed(0.0f), m_maxFireSpeed(0.0f)
+	m_sprite(texture), m_velocity(10.0f, 10.0f),
+	m_speed(300.0f), m_maxSpeed(13.0f), m_acceleration(4.0f),
+	m_deceleration(2.0f), m_angle(sf::degrees(20)),
+	m_maxRotation(sf::degrees(360)), m_rotationSpeed(5),
+	m_rotation(sf::degrees(15)), m_radius(1.0f),
+	m_mass(80.0f), m_health(100.0f), m_maxHealth(300.0f),
+	m_damage(0.0f), m_maxDamage(5.0f), m_fireRate(1.0f),
+	m_maxFireRate(1.0f), m_fireRange(10.0f), m_maxFireRange(1.0f),
+	m_fireSpeed(1.0f), m_maxFireSpeed(1.0f)
 {
+	//m_sprite.setPosition({ m_position.x, m_position.y });
+	m_sprite.setOrigin(m_sprite.getGlobalBounds().position);
 
-	
-	move();
+	//move();
 };
 Player::~Player() {
 	//delete player
-
-};
-void Player::update(float deltaTime) {
-	//update position
-
-		//m_position. +=  m_speed * deltaTime; // Update position
-		//m_sprite.setPosition(m_position);
-		//
-
-
-	//update rotation
-	//update health
-	//update damage
-	//update fire rate
-	//update fire range
-	//update fire speed
-	//update collision
-	//update bounds
-	//update movement
-	//update rotation
-	//update fire
-	//update upgrade
-	//update reset
-	//update respawn
-	//update die
-	//update take damage
-
-
-
 
 };
 
@@ -56,73 +28,132 @@ void Player::update(float deltaTime) {
 sf::Vector2f Player::getCenter() {
 	return sf::Vector2f(0, 0);
 };
-void Player::moveLeft() {
-	m_position.x -= m_speed * m_velocity[0];
-	m_sprite.setPosition({ m_position.x,m_position.y });
-	std::cout << "[" << m_position.x << ", " << m_position.y << "]\n";
 
-};
 void Player::moveRight() {
-	m_position.x += m_speed * m_velocity[0];
-	m_sprite.setPosition({ m_position.x,m_position.y });
-	std::cout << "[" << m_position.x << ", " << m_position.y << "]\n";
-	
-
+	m_rightPressed = true;
+};
+void Player::moveLeft() {
+	m_leftPressed = true;
 };
 void Player::moveUp() {
-	m_position.x -= m_speed * m_velocity[1];
-	m_sprite.setPosition({ m_position.x,m_position.y });
-	std::cout << "[" << m_position.x << ", " << m_position.y << "]\n";
+	m_upPressed = true;
 };
 void Player::moveDown() {
-	m_position.y += m_speed * m_velocity[1];
-	m_sprite.setPosition({ m_position.x,m_position.y });
-	std::cout << "[" << m_position.x << ", " << m_position.y << "]\n";
+	m_downPressed = true;
 };
+void Player::stopRight() {
+	m_rightPressed = false;
+};
+void Player::stopLeft() {
+	m_leftPressed = false;
+};
+void Player::stopUp() {
+	m_upPressed = false;
+};
+void Player::stopDown() {
+	m_downPressed = false;
+};
+
+
+//will call this function once every frame
+void Player::update(float elapsedTime, sf::Vector2i mousePosition) {
+	std::cout << elapsedTime << "\n";
+	if (m_upPressed) {
+		m_position.y -= m_speed * (elapsedTime);
+	}
+	if (m_downPressed) {
+		m_position.y += m_speed * (elapsedTime);
+	}
+	if (m_rightPressed) {
+		m_position.x += m_speed * (elapsedTime);
+	}
+	if (m_leftPressed) {
+		m_position.x -= m_speed * (elapsedTime);
+	}
+
+	m_sprite.setPosition({ m_position });
+	//keep the player in the arena
+	// 
+	//right side of screen
+	if (m_position.x > 1000 / 2 - m_tileSize) {
+		m_position.x = 1000 / 2 - m_tileSize;
+	}
+	//left side of the screen
+	if (m_position.x < 10 - m_tileSize) {
+		m_position.x = 10 - m_tileSize;
+	}
+	//bottom side of screen
+	if (m_position.y > 500 / 2 - m_tileSize) {
+		m_position.y = 500 / 2 - m_tileSize;
+	}
+	//top of the screen
+	if (m_position.y < -m_tileSize * 2) {
+		m_position.y = -m_tileSize * 2;
+	}
+	
+}
+
 void Player::rotateLeft() {
-	m_sprite.rotate(sf::degrees(-1));
+	m_sprite.rotate(sf::degrees(-45));
 };
 void Player::rotateRight() {
-	m_sprite.rotate(sf::degrees(1));
+	m_sprite.rotate(sf::degrees(45));
 
 };
 
 void Player::draw(sf::RenderWindow& window) {
-	
+
+	//update(seconds, mouseScreenPosition);
 	window.draw(m_sprite);
+	//clock.restart();
 
 }
 
-void Player::move() {
+void Player::move(sf::RenderWindow& window) {
 
 	sf::Vector2f direction;
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+			direction.y = -1.0f;
+			moveUp();
+			//checkBounds();
+			//checkCollision();
+		}
+		else  {
+			stopUp();
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+			direction.y = 1.0f;
+			moveDown();
+			//checkBounds();
+			//checkCollision();
+		}
+		else  {
+			stopDown();
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+			direction.x = -1.0f;
+			moveLeft();
+			//player1.rotateLeft();
+			//checkBounds();
+			//checkCollision();
+		}
+		else {
+			stopLeft();
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+			direction.x = 1.0f;
+			moveRight();
+			//player1.rotateRight();
+			//checkBounds();
+			//checkCollision();
+		}
+		else {
+			stopRight();
+		}	
 	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-		direction.y = -1.0f;
-		this->moveUp();
-		//checkBounds();
-		//checkCollision();
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-		direction.y = 1.0f;
-		this->moveDown();
-		//checkBounds();
-		//checkCollision();
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-		direction.x = -1.0f;
-		this->moveLeft();
-		this->rotateLeft();
-		//checkBounds();
-		//checkCollision();
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-		direction.x = 1.0f;
-		this->moveRight();
-		this->rotateRight();
-		//checkBounds();
-		//checkCollision();
-	}
+	
+
 };
 void Player::rotate() {
 	//rotate player
