@@ -8,27 +8,17 @@
 /// <param name="vm1"></param>
 
 Engine::Engine(sf::VideoMode vm1) :
-	m_resolution(sf::Vector2f({ 1250,780 })),
+	m_resolution(sf::Vector2f({ 1250,1250 })),
 	m_vm(vm1),
 	m_window(m_vm, "boilerplate"),
 	m_background(m_texture),
 	m_sound(m_sound),
-	m_dt(),
-	m_isRunning(true),
-	m_isPaused(false),
-	m_isLoaded(false),
-	m_isClosed(false),
-	m_isSoundOn(true),
-	m_isMusicOn(true),
-	m_isNetworkOn(false),
-	m_isAIOn(false),
-	m_isCollisionsOn(false),
-	m_isPhysicsOn(false)
+	m_dt()
 {
 	std::cout << "Engine Started\n";
 	
 	//add players here
-	
+
 	init();
 	load();
 
@@ -41,14 +31,10 @@ Engine::~Engine() {
 };
 
 
-void Engine::update() {
+void Engine::update(sf::RenderWindow& window) {
 	handleEvents();
 	handleInput();
 	handleCollisions();
-	handlePhysics();
-	handleAI();
-	handleSound();
-	handleNetwork();
 };
 
 
@@ -74,14 +60,12 @@ void Engine::draw(sf::Clock dt) {
 	}
 	Player player1(playertexture);
 	player1.m_sprite.setTexture(playertexture);
-	player1.update(DT.asSeconds(), mouseScreenPosition);
 	float seconds = DT.asSeconds();
-	std::cout << seconds << "\n";
 
-	player1.move(m_window);
+	player1.move();
+	player1.update(seconds, mouseScreenPosition);
 
 	
-	player1.update(seconds, mouseScreenPosition);
 	//draw and display defined window
 	m_window.clear();
 	m_window.draw(m_background);
@@ -100,12 +84,11 @@ void Engine::draw(sf::Clock dt) {
 
 void Engine::run() {
 	sf::Clock clock;
-
 	while (m_window.isOpen()) {
-		while (const std::optional event = m_window.pollEvent()) {
+	
 			draw(clock);
-			update();
-		}
+			update(m_window);
+	
 
 
 
@@ -183,26 +166,6 @@ void Engine::close() {
 
 	
 	
-void Engine::pause() {
-	std::cout << "Engine paused" << std::endl;
-	
-};
-
-	
-void Engine::resume() {
-	std::cout << "Engine resumed" << std::endl;
-	//m_window.create(m_vm, "boilerplate");
-	//m_window.setFramerateLimit(60);
-	//m_window.setVerticalSyncEnabled(true);
-	//m_window.setKeyRepeatEnabled(true);
-	//m_window.setMouseCursorVisible(true);
-	//m_window.setMouseCursorGrabbed(false);
-
-};
-
-
-
-
 
 
 
@@ -213,7 +176,7 @@ void Engine::handleEvents() {
 	std::cout << "Engine handled events" << std::endl;
 	while (const std::optional event = m_window.pollEvent()) {
 		if (event->is<sf::Event::KeyPressed>()) {
-
+			//player1.move();
 		}
 	}
 };
@@ -264,34 +227,3 @@ void Engine::handleCollisions() {
 
 	
 	
-void Engine::handlePhysics() {
-	std::cout << "Engine handled physics" << std::endl;
-	m_circle.move({1, 1});
-};
-
-	
-	
-void Engine::handleAI() {
-	std::cout << "Engine handled AI" << std::endl;
-};
-
-	
-		
-void Engine::handleSound() {
-	std::cout << "Engine handled sound" << std::endl;
-	//m_sound.play();
-};
-
-
-	
-	
-void Engine::handleNetwork() {
-	std::cout << "Engine handled network" << std::endl;
-	//sf::TcpSocket socket;
-	//sf::IpAddress ip = "";
-	//socket.connect(ip, 8080);
-	//socket.send("Hello");
-	//socket.receive("World");
-	//socket.disconnect();
-
-};

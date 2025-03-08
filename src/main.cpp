@@ -11,7 +11,7 @@ int main() {
 
 	sf::VideoMode vm({800,600}, 32);
 	vm.bitsPerPixel = 32;
-	
+
 	
 	//if (!texture.loadFromFile("C:/dev/2d_game_boilerplate/graphics/background.png")) {
 	//	std::cout << "Error loading texture" << std::endl;
