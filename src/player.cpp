@@ -2,18 +2,17 @@
 
 //public
 
-
-Player::Player(sf::Texture texture) :
-	m_sprite(texture), m_velocity(10.0f, 10.0f),m_position(100,100),
+Player::Player(sf::Texture texture , sf::RenderWindow &window) :
+	m_sprite(texture), m_velocity(10.0f, 10.0f),m_position(100.0f,100.0f),
 	m_speed(300.0f), m_health(100.0f), m_upPressed(true), 
 	m_downPressed(true), m_leftPressed(true),m_rightPressed(true)
 {
 
-
+	p_window = &window;
 	
-	m_sprite.setPosition(m_position);
+	//m_sprite.setPosition(m_position);
 
-	//move();
+	move();
 };
 Player::~Player() {
 	//delete player
@@ -52,30 +51,29 @@ void Player::stopDown() {
 
 
 //will call this function once every frame
-void Player::update(float elapsedTime, sf::Vector2i mousePosition) {			//
-	std::cout << elapsedTime << "\n";											//
-	if (m_upPressed) {															//
-		m_position.y -= m_speed;								//
-		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";	//
-		m_sprite.setPosition({ m_position });									//
-	}																			//
-	if (m_downPressed) {														//
-		m_position.y += m_speed;								//
-		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";	// problem is that m_position is being reset every frame
-		m_sprite.setPosition({ m_position });									//
-	}																			//
-	if (m_rightPressed) {														//
-		m_position.x += m_speed;								// another issue is that m_position components arent stopping
-		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";	// upon keyRelease
-		m_sprite.setPosition({ m_position });									//
-	}																			//
-	if (m_leftPressed) {														//
-		m_position.x -= m_speed;								//
-		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";	//
-		m_sprite.setPosition({ m_position });									//
-	}																			//
+void Player::update(float elapsedTime, sf::Vector2i mousePosition) {			
+	std::cout << elapsedTime << "\n";											
+	if (m_upPressed) {															
+		m_position.y -= m_speed * elapsedTime+5;
+		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";	
+										
+	}
+	if (m_downPressed) {														
+		m_position.y += m_speed * elapsedTime+5;
+		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";	
+											
+	}																			
+	if (m_rightPressed) {														
+		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";	
+									
+	}																			
+	if (m_leftPressed) {														
+		m_position.x -= m_speed * elapsedTime+5;
+		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";	
+											
+	}																			
 
-	
+	m_sprite.setPosition({ m_position });
 }
 
 void Player::rotateLeft() {
@@ -88,55 +86,33 @@ void Player::rotateRight() {
 
 void Player::draw(sf::RenderWindow& window) {
 
-	//update(seconds, mouseScreenPosition);
 	window.draw(m_sprite);
-	//clock.restart();
+	
 
 }
 
 void Player::move() {
-
-	sf::Vector2f direction;
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-			direction.y = -1.0f;
-			moveUp();
-			//checkBounds();
-			//checkCollision();
-		}
-		else  {
-			stopUp();
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-			direction.y = 1.0f;
-			moveDown();
-			//checkBounds();
-			//checkCollision();
-		}
-		else  {
-			stopDown();
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-			direction.x = -1.0f;
-			moveLeft();
-			//player1.rotateLeft();
-			//checkBounds();
-			//checkCollision();
-		}
-		else {
-			stopLeft();
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-			direction.x = 1.0f;
-			moveRight();
-			//player1.rotateRight();
-			//checkBounds();
-			//checkCollision();
-		}
-		else {
-			stopRight();
-		}	
 	
+	while (const std::optional event = p_window->pollEvent()) {
+		sf::Clock clock;
+		sf::Vector2i mouseScreenPosition;
+		mouseScreenPosition = sf::Mouse::getPosition(*p_window);
+		sf::Time time = clock.restart();
+		float dt = time.asSeconds();
+
+		if (event->is<sf::Event::KeyPressed>()) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) moveUp();    else    stopUp();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) moveLeft();  else    stopLeft();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) moveDown();  else    stopDown();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) moveRight(); else    stopRight();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
+				p_window->close();
+			}
+			update(dt, mouseScreenPosition);
+		}
 		
+
+		clock.getElapsedTime();
+	}
 
 };

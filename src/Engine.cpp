@@ -18,6 +18,7 @@ Engine::Engine(sf::VideoMode vm1) :
 	std::cout << "Engine Started\n";
 	
 	//add players here
+	
 
 	init();
 	load();
@@ -31,45 +32,21 @@ Engine::~Engine() {
 };
 
 
-void Engine::update(sf::RenderWindow& window) {
+void Engine::update() {
 	handleEvents();
 	handleInput();
 	handleCollisions();
 };
 
 
-void Engine::draw(sf::Clock dt) {
+void Engine::draw() {
 	
-	sf::Time DT = dt.restart();
-	sf::Vector2f mouseWorldPosition;
-	sf::Vector2i mouseScreenPosition;
-	mouseScreenPosition = sf::Mouse::getPosition(m_window);
 	//draw background
 	sf::Sprite background(m_texture);
 	m_background = background;
 
-	sf::Texture playertexture;
-	//texture = TextureHolder::getTexture("../graphics/player.png");
-	if (!playertexture.loadFromFile("C:/dev/2d_game_boilerplate/graphics/player.png")) { // Replace with your texture file
-		// Handle texture loading error
-		std::cout << "player texture not loaded\n";
-	}
-	else {
-		std::cout << "player texture loaded from file\n";
-		playertexture = TextureHolder::getTexture("graphics/player.png");
-	}
-	Player player1(playertexture);
-	player1.m_sprite.setTexture(playertexture);
-	float seconds = DT.asSeconds();
-
-	player1.move();
-	player1.update(seconds, mouseScreenPosition);
-
 	
-	//draw and display defined window
-	m_window.clear();
 	m_window.draw(m_background);
-	player1.draw(m_window);
 	std::cout << "background texture good\n";
 	m_window.display();
 };
@@ -83,18 +60,37 @@ void Engine::draw(sf::Clock dt) {
 /// </summary>
 
 void Engine::run() {
+	
 	sf::Clock clock;
+	sf::Time time = clock.restart();
+	float dt = time.asSeconds();
+	sf::Vector2f mouseWorldPosition;
+	sf::Vector2i mouseScreenPosition;
+	mouseScreenPosition = sf::Mouse::getPosition(m_window);
+	sf::Texture texture = TextureHolder::getTexture("../graphics/player.png");
+	if (texture.loadFromFile("C:/dev/2d_game_boilerplate/graphics/player.png")) { // Replace with your texture file
+		// Handle texture loading error
+		std::cout << "player texture not loaded\n";
+	}
+	else {
+		std::cout << "player texture loaded from file\n";
+		texture = TextureHolder::getTexture("../graphics/player.png");
+	}
 	while (m_window.isOpen()) {
-	
-			draw(clock);
-			update(m_window);
-	
+
+		Player player1(texture, m_window );
+		player1.m_sprite.setTexture(texture);
+		
+		m_window.clear();
+		player1.move();
+		draw();
+		player1.draw(m_window);
 
 
 
 		
 		
-		
+		clock.getElapsedTime();
 	}
 	unload();
 	close();
@@ -120,9 +116,7 @@ void Engine::init() {
 /// </summary>
 void Engine::load() {
 	std::cout << "Engine loaded" << std::endl;
-
-	//m_texture = TextureHolder::getTexture("../graphics/background.png");
-	//m_texture.loadFromFile("C:/dev/2d_game_boilerplate/graphics/background.png");
+	
 	if (!m_texture.loadFromFile("C:/dev/2d_game_boilerplate/graphics/background.png")) {
 		std::cout << "Error loading texture" << std::endl;
 	}
@@ -138,15 +132,12 @@ void Engine::load() {
 	m_background.setRotation(sf::degrees(0));
 
 
-	
-	//m_background.setColor(sf::Color(255, 255, 255, 255));
-    //m_background.setTextureRect(sf::IntRect(0, 0, 800, 600));
+
 };
 
 	
 void Engine::unload() {
 	std::cout << "Engine unloaded" << std::endl;
-	//m_window.close();
 };
 
 

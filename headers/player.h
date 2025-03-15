@@ -19,6 +19,8 @@ private:
 	float m_speed;
 	float m_health;
 
+	sf::RenderWindow *p_window;
+
 
 	bool m_upPressed;
 	bool m_downPressed;
@@ -42,7 +44,7 @@ public:
 	sf::Sprite m_sprite;
 
 
-	Player(sf::Texture texture);
+	Player(sf::Texture texture, sf::RenderWindow& window);
 	~Player();
 	void update(float elapsedTime, sf::Vector2i mousePosition);
 	void draw(sf::RenderWindow& window);

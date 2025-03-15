@@ -16,6 +16,9 @@
 class Engine {
 public:
 
+	
+
+
 	enum class State {
 		PAUSED, LEVELING_UP, GAMEOVER, PLAYING
 	};
@@ -37,8 +40,8 @@ private:
 	void init();
 	void load();
 	void unload();
-	void update(sf::RenderWindow& window);
-	void draw(sf::Clock dt);
+	void update();
+	void draw();
 	TextureHolder th;
 	sf::RenderWindow m_window;
 	sf::Texture m_texture;
