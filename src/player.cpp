@@ -7,12 +7,10 @@ Player::Player(sf::Texture texture, sf::RenderWindow& window) :
 	m_speed(300.0f), m_health(100.0f), m_upPressed(true),
 	m_downPressed(true), m_leftPressed(true), m_rightPressed(true)
 {
-
+	//pointer to engine m_window
 	p_window = &window;
 
-	//m_sprite.setPosition(m_position);
 
-	//move();
 };
 Player::~Player() {
 	//delete player
@@ -64,16 +62,16 @@ void Player::update(float elapsedTime, sf::Vector2i mousePosition) {
 	if (m_downPressed) {
 		m_position.y += m_speed * elapsedTime + 10;
 		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";
-		if (m_position.y >= 400) {
-			m_position.y = 400;
+		if (m_position.y >= 550) {
+			m_position.y = 550;
 		}
 
 	}
 	if (m_rightPressed) {
 		m_position.x += m_speed * elapsedTime + 10;
 		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";
-		if (m_position.x >= 650) {
-			m_position.x = 650;
+		if (m_position.x >= 750) {
+			m_position.x = 750;
 		}
 
 	}
@@ -88,14 +86,6 @@ void Player::update(float elapsedTime, sf::Vector2i mousePosition) {
 
 	m_sprite.setPosition({ m_position });
 }
-
-void Player::rotateLeft() {
-	m_sprite.rotate(sf::degrees(-45));
-};
-void Player::rotateRight() {
-	m_sprite.rotate(sf::degrees(45));
-
-};
 
 void Player::draw(sf::RenderWindow& window) {
 

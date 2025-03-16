@@ -2,10 +2,7 @@
 
 
 
-/// <summary>
-/// private functions
-/// </summary>
-/// <param name="vm1"></param>
+
 
 Engine::Engine(sf::VideoMode vm1) :
 	m_resolution(sf::Vector2f({ 1250,1250 })),
@@ -17,7 +14,6 @@ Engine::Engine(sf::VideoMode vm1) :
 {
 	std::cout << "Engine Started\n";
 	
-	//add players here
 	
 
 	init();
@@ -60,29 +56,34 @@ void Engine::draw(sf::Sprite &sprite) {
 
 
 
-/// <summary>
+
 /// /////////////GAME LOOP////////////GAME LOOP////////////////GAME LOOP/////////////////////GAME LOOP/////////////////////GAME LOOP/////////////////////GAME LOOP//////////////////
-/// </summary>
+
 
 void Engine::run() {
 	
-	sf::Clock clock;
-	sf::Time time = clock.restart();
-	float dt = time.asSeconds();
-	sf::Vector2f mouseWorldPosition;
-	sf::Vector2i mouseScreenPosition;
-	mouseScreenPosition = sf::Mouse::getPosition(m_window);
-	sf::Texture texture;
+	/*
+		THIS CAN BE USED FOR CONTINUOUS PLAYER MOVEMENT
+	*/
+	//sf::Clock clock;
+	//sf::Time time = clock.restart();
+	//float dt = time.asSeconds();
+	//sf::Vector2f mouseWorldPosition;
+	//sf::Vector2i mouseScreenPosition;
+	//mouseScreenPosition = sf::Mouse::getPosition(m_window);
 
 
 	/*
 	
 		setting texture for player
 	*/
-	//sf::Texture texture = TextureHolder::getTexture("../graphics/player.png");
+	sf::Texture texture;
+
+	//loading texture
 	if (!texture.loadFromFile("C:/dev/2d_game_boilerplate/graphics/player1.png")) { // Replace with your texture file
 		// Handle texture loading error
 		std::cout << "player texture not loaded\n";
+		//using texture holder if for some reason the load from file isnt used.
 		texture = TextureHolder::getTexture("../graphics/player.png");
 	}
 	else {
@@ -101,22 +102,30 @@ void Engine::run() {
 	/*
 		WINDOW LOOP
 	*/
-
-
-
 	while (m_window.isOpen()) {
 
+		//not really sure why to clear, but I've seen several instances where
+		// people clear window before drawing and displaying.
+		m_window.clear();
 		
+
+		//draws background and player
 		draw(player1.m_sprite);
+
+		//movement needs to happen while window is open
 		player1.move();
 
+		//this update can be used for continuous movment. uncomment the clock at the top
+		// and any other time related parameters
+		//player1.update(dt, mouseScreenPosition);
 
 	}
 
-
-	//m_window.clear();
+	//unloading engine stuffs
 	unload();
 
+
+	//automatically closes window when window loop is exited
 	close();
 
 
@@ -126,11 +135,9 @@ void Engine::run() {
 
 
 
-/// <summary>
-/// initialize window and set up initial settings
-/// </summary>
-/// 
-/// 
+/*
+	USE THIS TO INITIALIZE WINDOW; WILL USE FOR OTHER INITIAL INITIALIZATIONS
+*/
 void Engine::init() {
 	std::cout << "Engine initialized" << std::endl;
 	m_window.create(m_vm, "boilerplate");
@@ -142,9 +149,10 @@ void Engine::init() {
 	m_window.setMouseCursorGrabbed(false);
 };
 
-/// <summary>
-/// loading in the texture for the background
-/// </summary>
+/*
+	WILL USE FOR LOADING BACKGROUND FOR NOW. ULTIMATELY FOR LOADING ENGINE RELATED INITIATION
+	DURING GAME LOOP
+*/
 void Engine::load() {
 	std::cout << "Engine loaded" << std::endl;
 	
@@ -166,7 +174,9 @@ void Engine::load() {
 
 };
 
-	
+/*
+	FOR UNLOADING ENGINE RELATED ITEMS. LIKE FREEING MEMORY AND SUCH
+*/
 void Engine::unload() {
 	std::cout << "Engine unloaded" << std::endl;
 };
@@ -180,7 +190,9 @@ void Engine::unload() {
 
 
 	
-	
+/*
+	FOR THE OPTION TO CLOSE THE WINDOW FOR ANY REASON
+*/
 void Engine::close() {
 	std::cout << "Engine closed" << std::endl;
 	m_window.close();
@@ -193,7 +205,12 @@ void Engine::close() {
 
 ///////////////////////////////HANDLERS///////////////////////HANDLERS/////////////////////////////HANDLERS/////////////////////////////////////////////HANDLERS//////////////////////
 	
-	
+
+
+/*
+	HANDLING EVENTS HAVING TO DO WITH MAIN APPLICATION(ENGINE)
+	WILL USE FOR MOUSE EVENTS, HOT KEYS, HUD, ETC...
+*/
 void Engine::handleEvents() {
 	std::cout << "Engine handled events" << std::endl;
 	while (const std::optional event = m_window.pollEvent()) {
@@ -204,7 +221,9 @@ void Engine::handleEvents() {
 };
 
 	
-	
+/*
+	MAY USE MAY NOT, WILL NEED TO UTILIZE WITHIN HANDLE EVENTS MAYBE?? IDK YET
+*/
 void Engine::handleInput() {
 	std::cout << "Engine handled input" << std::endl;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
@@ -239,12 +258,14 @@ void Engine::handleInput() {
 	
 };
 
-		
+/*
+	MAY USE FOR COLLISIONS OUTSIDE OF PLAYER BUT ULTIMATELY COLLISIONS WITH PLAYER WILL
+	BE HANDLED IN PLAYER CLASS
+*/
 void Engine::handleCollisions() {
 	std::cout << "Engine handled collisions" << std::endl;
-	//if (m_circle.getGlobalBounds().intersects(m_background.getGlobalBounds())) {
 	//	std::cout << "Collision detected" << std::endl;
-	//};
+	
 };	
 
 	

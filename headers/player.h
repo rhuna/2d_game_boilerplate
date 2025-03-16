@@ -57,8 +57,6 @@ public:
 	void moveRight();
 	void moveUp();
 	void moveDown();
-	void rotateLeft();
-	void rotateRight();
 	void stopRight();
 	void stopLeft();
 	void stopUp();
