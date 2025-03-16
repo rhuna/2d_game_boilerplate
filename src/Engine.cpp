@@ -80,7 +80,7 @@ void Engine::run() {
 		setting texture for player
 	*/
 	//sf::Texture texture = TextureHolder::getTexture("../graphics/player.png");
-	if (!texture.loadFromFile("C:/dev/2d_game_boilerplate/graphics/player.png")) { // Replace with your texture file
+	if (!texture.loadFromFile("C:/dev/2d_game_boilerplate/graphics/player1.png")) { // Replace with your texture file
 		// Handle texture loading error
 		std::cout << "player texture not loaded\n";
 		texture = TextureHolder::getTexture("../graphics/player.png");
@@ -107,14 +107,10 @@ void Engine::run() {
 	while (m_window.isOpen()) {
 
 		
-		player1.move();
 		draw(player1.m_sprite);
+		player1.move();
 
 
-
-		
-		
-		clock.getElapsedTime();
 	}
 
 
@@ -138,6 +134,7 @@ void Engine::run() {
 void Engine::init() {
 	std::cout << "Engine initialized" << std::endl;
 	m_window.create(m_vm, "boilerplate");
+	m_window.setSize({ 800,600 });
 	m_window.setFramerateLimit(60);
 	m_window.setVerticalSyncEnabled(true);
 	m_window.setKeyRepeatEnabled(true);

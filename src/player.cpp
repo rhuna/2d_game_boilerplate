@@ -2,14 +2,14 @@
 
 //public
 
-Player::Player(sf::Texture texture , sf::RenderWindow &window) :
-	m_sprite(texture), m_velocity(10.0f, 10.0f),m_position(100.0f,100.0f),
-	m_speed(300.0f), m_health(100.0f), m_upPressed(true), 
-	m_downPressed(true), m_leftPressed(true),m_rightPressed(true)
+Player::Player(sf::Texture texture, sf::RenderWindow& window) :
+	m_sprite(texture), m_velocity(10.0f, 10.0f), m_position(100.0f, 100.0f),
+	m_speed(300.0f), m_health(100.0f), m_upPressed(true),
+	m_downPressed(true), m_leftPressed(true), m_rightPressed(true)
 {
 
 	p_window = &window;
-	
+
 	//m_sprite.setPosition(m_position);
 
 	//move();
@@ -51,26 +51,38 @@ void Player::stopDown() {
 
 
 //will call this function once every frame
-void Player::update(float elapsedTime, sf::Vector2i mousePosition) {			
-	std::cout << elapsedTime << "\n";											
-	if (m_upPressed) {															
-		m_position.y -= m_speed * elapsedTime+5;
-		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";	
-										
+void Player::update(float elapsedTime, sf::Vector2i mousePosition) {
+	std::cout << elapsedTime << "\n";
+	if (m_upPressed) {
+		m_position.y -= m_speed * elapsedTime + 10;
+		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";
+		if (m_position.y <= 0) {
+			m_position.y = 0;
+		}
+
 	}
-	if (m_downPressed) {														
-		m_position.y += m_speed * elapsedTime+5;
-		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";	
-											
-	}																			
+	if (m_downPressed) {
+		m_position.y += m_speed * elapsedTime + 10;
+		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";
+		if (m_position.y >= 400) {
+			m_position.y = 400;
+		}
+
+	}
 	if (m_rightPressed) {
-		m_position.x += m_speed * elapsedTime + 5;
-		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";	
-									
-	}																			
-	if (m_leftPressed) {														
-		m_position.x -= m_speed * elapsedTime+5;
-		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";	
+		m_position.x += m_speed * elapsedTime + 10;
+		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";
+		if (m_position.x >= 650) {
+			m_position.x = 650;
+		}
+
+	}
+	if (m_leftPressed) {
+		m_position.x -= m_speed * elapsedTime + 10;
+		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";
+		if(m_position.x <= 0){
+			m_position.x = 0;
+		}
 											
 	}																			
 

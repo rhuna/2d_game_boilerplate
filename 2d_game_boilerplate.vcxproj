@@ -115,6 +115,7 @@
     <Image Include="graphics\background.png" />
     <Image Include="graphics\background_sheet.png" />
     <Image Include="graphics\player.png" />
+    <Image Include="graphics\player1.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
