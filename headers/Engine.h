@@ -41,7 +41,7 @@ private:
 	void load();
 	void unload();
 	void update();
-	void draw();
+	void draw(sf::Sprite &sprite);
 	TextureHolder th;
 	sf::RenderWindow m_window;
 	sf::Texture m_texture;

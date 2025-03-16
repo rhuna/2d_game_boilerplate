@@ -12,7 +12,7 @@ Player::Player(sf::Texture texture , sf::RenderWindow &window) :
 	
 	//m_sprite.setPosition(m_position);
 
-	move();
+	//move();
 };
 Player::~Player() {
 	//delete player
@@ -63,7 +63,8 @@ void Player::update(float elapsedTime, sf::Vector2i mousePosition) {
 		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";	
 											
 	}																			
-	if (m_rightPressed) {														
+	if (m_rightPressed) {
+		m_position.x += m_speed * elapsedTime + 5;
 		std::cout << "[ " << m_position.x << ", " << m_position.y << " ]\n";	
 									
 	}																			
@@ -92,26 +93,32 @@ void Player::draw(sf::RenderWindow& window) {
 }
 
 void Player::move() {
-	
+	//initialize clock and mouse screen position
+	sf::Clock clock;
+	sf::Vector2i mouseScreenPosition;
+
+	//event handling through pointer to engine window.
 	while (const std::optional event = p_window->pollEvent()) {
-		sf::Clock clock;
-		sf::Vector2i mouseScreenPosition;
+
+		//setting time and position for mouse
 		mouseScreenPosition = sf::Mouse::getPosition(*p_window);
 		sf::Time time = clock.restart();
 		float dt = time.asSeconds();
 
+		//event handling for wasd
 		if (event->is<sf::Event::KeyPressed>()) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) moveUp();    else    stopUp();
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) moveLeft();  else    stopLeft();
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) moveDown();  else    stopDown();
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) moveRight(); else    stopRight();
+			//press escape to close
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
 				p_window->close();
 			}
-			update(dt, mouseScreenPosition);
 		}
+		update(dt, mouseScreenPosition);
 		
-
+		//get elapsed time for  restart fn
 		clock.getElapsedTime();
 	}
 
