@@ -1,6 +1,5 @@
 #include "../headers/player.h"
 
-//public
 
 Player::Player(sf::Texture texture, sf::RenderWindow& window) :
 	m_sprite(texture), m_velocity(10.0f, 10.0f), m_position(100.0f, 100.0f),
@@ -19,7 +18,7 @@ Player::~Player() {
 
 
 sf::Vector2f Player::getCenter() {
-	return sf::Vector2f(0, 0);
+	return sf::Vector2f(m_position.x, m_position.y);
 };
 
 void Player::moveRight() {

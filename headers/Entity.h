@@ -15,13 +15,13 @@
 
 class Entity {
 private:
-	sf::Texture m_texture;
-	sf::Sprite m_sprite;
 	
 
 	
 public:
 
+	sf::Texture m_texture;
+	sf::Sprite m_sprite;
 	Entity();
 	Entity(sf::Vector2f position, sf::Vector2f velocity, sf::Vector2f resolution);
 	~Entity();

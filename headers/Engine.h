@@ -24,7 +24,7 @@ public:
 	};
 	State state = State::GAMEOVER;
 
-
+	
 
 	Engine(sf::VideoMode vm1);
 	~Engine();
@@ -41,8 +41,7 @@ private:
 	void load();
 	void unload();
 	void update();
-	void draw(sf::Sprite &sprite);
-	TextureHolder th;
+	void draw(sf::Sprite &sprite1, const sf::Sprite &sprite2);
 	sf::RenderWindow m_window;
 	sf::Texture m_texture;
 	sf::Sprite m_background;

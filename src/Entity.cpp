@@ -4,7 +4,6 @@
 //public
 Entity::Entity() :
 	m_sprite(m_texture)
-
 {
 	//texture.loadFromFile("C:/dev/2d_game_boilerplate/graphics/background.png");
 	//sprite.setTexture(texture);
@@ -16,14 +15,14 @@ Entity::Entity() :
 	//sprite.setTextureRect(sf::IntRect(0, 0, 800, 600));
 
 };
-Entity::Entity(sf::Vector2f position, sf::Vector2f velocity, sf::Vector2f resolution):
+Entity::Entity(sf::Vector2f position, sf::Vector2f velocity, sf::Vector2f resolution) :
 	//m_position(position),
 	//m_velocity(velocity),
 	//m_resolution(resolution),
 	m_sprite(m_texture)
 {
 	//texture.loadFromFile("C:/dev/2d_game_boilerplate/graphics/background.png");
-	//sprite.setTexture(texture);
+	m_sprite.setTexture(m_texture);
 	//sprite.setPosition(0, 0);
 	//sprite.setScale(1, 1);
 	//sprite.setOrigin(0, 0);

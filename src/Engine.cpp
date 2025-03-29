@@ -1,5 +1,5 @@
 #include "../headers/Engine.h"
-
+#include "../headers/enemy.h"
 
 
 
@@ -29,15 +29,15 @@ Engine::~Engine() {
 
 
 void Engine::update() {
-	handleEvents();
-	handleInput();
-	handleCollisions();
+	//handleEvents();
+	//handleInput();
+	//handleCollisions();
 };
 
 
-void Engine::draw(sf::Sprite &sprite) {
+void Engine::draw(sf::Sprite &sprite1, const sf::Sprite &sprite2) {
 
-
+	
 
 	//draw background
 	sf::Sprite background(m_texture);
@@ -47,7 +47,10 @@ void Engine::draw(sf::Sprite &sprite) {
 	m_window.draw(m_background);
 	std::cout << "background texture good\n";
 
-	m_window.draw(sprite);
+	m_window.draw(sprite1);
+	//not drawing sprite 2 now
+	m_window.draw(sprite2);
+
 	m_window.display();
 
 };
@@ -65,12 +68,12 @@ void Engine::run() {
 	/*
 		THIS CAN BE USED FOR CONTINUOUS PLAYER MOVEMENT
 	*/
-	//sf::Clock clock;
-	//sf::Time time = clock.restart();
-	//float dt = time.asSeconds();
+	sf::Clock clock;
+	sf::Time time = clock.restart();
+	float dt = time.asSeconds();
 	//sf::Vector2f mouseWorldPosition;
-	//sf::Vector2i mouseScreenPosition;
-	//mouseScreenPosition = sf::Mouse::getPosition(m_window);
+	sf::Vector2i mouseScreenPosition;
+	mouseScreenPosition = sf::Mouse::getPosition(m_window);
 
 
 	/*
@@ -96,7 +99,8 @@ void Engine::run() {
 	*/
 	Player player1(texture, m_window);
 	player1.m_sprite.setTexture(texture);
-
+	Enemy enemy1(texture, m_window);
+	//enemy1.getSprite().setTexture(texture);
 
 
 	/*
@@ -110,10 +114,17 @@ void Engine::run() {
 		
 
 		//draws background and player
-		draw(player1.m_sprite);
-
+		draw(player1.m_sprite, enemy1.getSprite());
+		
 		//movement needs to happen while window is open
 		player1.move();
+
+		enemy1.moveToward(player1);
+
+		//should update enemy position according to player position
+		enemy1.update(dt, mouseScreenPosition);
+
+		
 
 		//this update can be used for continuous movment. uncomment the clock at the top
 		// and any other time related parameters
@@ -215,7 +226,9 @@ void Engine::handleEvents() {
 	std::cout << "Engine handled events" << std::endl;
 	while (const std::optional event = m_window.pollEvent()) {
 		if (event->is<sf::Event::KeyPressed>()) {
-			//player1.move();
+			if (event->getIf<sf::Event::KeyPressed>()->code == sf::Keyboard::Key::Escape) {
+				m_window.close();
+			}
 		}
 	}
 };
@@ -226,34 +239,6 @@ void Engine::handleEvents() {
 */
 void Engine::handleInput() {
 	std::cout << "Engine handled input" << std::endl;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
-		m_window.close();
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::H)) {
-		//PULL HUD UP AND DOWN
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P)) {
-		//SCREENSHOT
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) {
-		//state = PAUSED || IF STATE==PAUSE THEN STATE = PLAYING
-		if (state == State::GAMEOVER) {
-			state = State::LEVELING_UP;
-			std::cout << "leveling up\n";
-		}
-		if (state == State::PLAYING) {
-			state = State::PAUSED;
-			std::cout << "Paused\n";
-		}
-		if (state == State::PAUSED) {
-			state = State::PLAYING;
-			std::cout << "Playing\n";
-		}
-		if (state == State::LEVELING_UP) {
-			state = State::PLAYING;
-			std::cout << "Playing\n";
-		}
-	}
 
 	
 };
