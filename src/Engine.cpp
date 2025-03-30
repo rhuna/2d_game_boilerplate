@@ -122,7 +122,7 @@ void Engine::run() {
 		enemy1.moveToward(player1);
 
 		//should update enemy position according to player position
-		enemy1.update(dt, mouseScreenPosition);
+		enemy1.update(dt,player1);
 
 		
 

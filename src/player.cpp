@@ -84,6 +84,9 @@ void Player::update(float elapsedTime, sf::Vector2i mousePosition) {
 	}																			
 
 	m_sprite.setPosition({ m_position });
+
+
+
 }
 
 void Player::draw(sf::RenderWindow& window) {

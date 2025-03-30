@@ -31,12 +31,31 @@ sf::Sprite Enemy::getSprite()
 }
 
 
-void Enemy::update(float elapsedTime, sf::Vector2i mousePosition){
+void Enemy::update(float elapsedTime, Player player){
 	//update will update position according to the closeness to the player
 	//and will update the sprite position
-	m_position.x += m_velocity[0];
-	m_position.y += m_velocity[1];
-	m_sprite.setPosition(m_position);
+	if (player.getCenter().x - m_position.x < 100 && player.getCenter().y - m_position.y < 100) {
+		//move towards player
+		if (player.getCenter().x > m_position.x) {
+			m_velocity[0] = 1.0f;
+		}
+		else {
+			m_velocity[0] = -1.0f;
+		}
+		if (player.getCenter().y > m_position.y) {
+			m_velocity[1] = 1.0f;
+		}
+		else {
+			m_velocity[1] = -1.0f;
+		}
+		m_position.x += m_velocity[0];
+		m_position.y += m_velocity[1];
+		m_sprite.setPosition(m_position);
+
+	}
+	//m_position.x += m_velocity[0];
+	//m_position.y += m_velocity[1];
+	//m_sprite.setPosition(m_position);
 
 }
 
