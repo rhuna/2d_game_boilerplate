@@ -1,1 +1,1 @@
-# 2d game boilerplate
+# 2d game boilerplate for a top down shooter
