@@ -18,7 +18,8 @@ Player::~Player() {
 
 
 sf::Vector2f Player::getCenter() {
-	return sf::Vector2f(m_position.x, m_position.y);
+	//get the center of the player sprite
+	return { m_position.x + m_tileSize / 2, m_position.y + m_tileSize / 2 };
 };
 
 void Player::moveRight() {
@@ -89,12 +90,7 @@ void Player::update(float elapsedTime, sf::Vector2i mousePosition) {
 
 }
 
-void Player::draw(sf::RenderWindow& window) {
 
-	window.draw(m_sprite);
-	
-
-}
 
 void Player::move() {
 	//initialize clock and mouse screen position
@@ -111,10 +107,26 @@ void Player::move() {
 
 		//event handling for wasd
 		if (event->is<sf::Event::KeyPressed>()) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) moveUp();    else    stopUp();
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) moveLeft();  else    stopLeft();
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) moveDown();  else    stopDown();
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) moveRight(); else    stopRight();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) { 
+				moveUp();
+				//face sprite upward
+				m_sprite.setRotation(sf::degrees(270));
+			}else    stopUp();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { 
+				moveLeft();
+				//face sprite left centered around the center of the sprite
+				m_sprite.setRotation(sf::degrees(180));
+			}else    stopLeft();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) { 
+				moveDown(); 
+				//face sprite down
+				m_sprite.setRotation(sf::degrees(90));
+			}else    stopDown();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+				moveRight();
+				//face sprite right
+				m_sprite.setRotation(sf::degrees(0));
+			}else    stopRight();
 			//press escape to close
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
 				p_window->close();

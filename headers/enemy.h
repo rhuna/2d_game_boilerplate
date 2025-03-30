@@ -30,8 +30,7 @@ public:
 	sf::Texture getTexture();
 	sf::Sprite getSprite();
 	void update(float elapsedTime, Player player);
-	void draw(sf::RenderWindow& window);
-	void moveToward(Player &player);
+	
 
 
 

@@ -38,15 +38,19 @@ void Enemy::update(float elapsedTime, Player player){
 		//move towards player
 		if (player.getCenter().x > m_position.x) {
 			m_velocity[0] = 1.0f;
+			m_sprite.setRotation(sf::degrees(0));
 		}
 		else {
 			m_velocity[0] = -1.0f;
+			m_sprite.setRotation(sf::degrees(180));
 		}
 		if (player.getCenter().y > m_position.y) {
 			m_velocity[1] = 1.0f;
+			m_sprite.setRotation(sf::degrees(90));
 		}
 		else {
 			m_velocity[1] = -1.0f;
+			m_sprite.setRotation(sf::degrees(270));
 		}
 		m_position.x += m_velocity[0];
 		m_position.y += m_velocity[1];
@@ -60,19 +64,3 @@ void Enemy::update(float elapsedTime, Player player){
 }
 
 
-void Enemy::draw(sf::RenderWindow& window){
-	window.draw(m_sprite);
-	
-}
-
-
-void Enemy::moveToward(Player &player){
-	//enemy will move towards the player only when player gets close enough
-	if (player.getCenter().x - m_position.x < 100 && player.getCenter().y - m_position.y < 100) {
-		//move towards player
-		m_position.x += m_velocity[0];
-		m_position.y += m_velocity[1];
-		m_sprite.setPosition(m_position);
-	}
-	//otherwise enemy will do tasks or move about unaware of the player
-};

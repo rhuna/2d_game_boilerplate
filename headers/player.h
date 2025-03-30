@@ -46,8 +46,7 @@ public:
 
 	Player(sf::Texture texture, sf::RenderWindow& window);
 	~Player();
-	void update(float elapsedTime, sf::Vector2i mousePosition);
-	void draw(sf::RenderWindow& window);
+	void update(float elapsedTime, sf::Vector2i mousePosition);;
 	void move();
 
 

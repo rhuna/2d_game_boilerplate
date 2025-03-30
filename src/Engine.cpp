@@ -72,8 +72,8 @@ void Engine::run() {
 	sf::Time time = clock.restart();
 	float dt = time.asSeconds();
 	//sf::Vector2f mouseWorldPosition;
-	sf::Vector2i mouseScreenPosition;
-	mouseScreenPosition = sf::Mouse::getPosition(m_window);
+	//sf::Vector2i mouseScreenPosition;
+	//mouseScreenPosition = sf::Mouse::getPosition(m_window);
 
 
 	/*
@@ -119,16 +119,10 @@ void Engine::run() {
 		//movement needs to happen while window is open
 		player1.move();
 
-		enemy1.moveToward(player1);
 
 		//should update enemy position according to player position
 		enemy1.update(dt,player1);
 
-		
-
-		//this update can be used for continuous movment. uncomment the clock at the top
-		// and any other time related parameters
-		//player1.update(dt, mouseScreenPosition);
 
 	}
 
